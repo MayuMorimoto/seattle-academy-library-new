@@ -1,0 +1,17 @@
+table, td, th {
+	border: 2px #808080 solid; 
+	font-size : 100%;
+}
+
+.table{
+	justify-content: center;
+}
+
+#rentHistoryTbl{
+	width: 300px;
+    margin: auto;
+}
+
+.header{
+	background-color: #D7EEFF;
+}
