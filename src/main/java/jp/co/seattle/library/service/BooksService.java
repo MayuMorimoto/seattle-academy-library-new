@@ -45,16 +45,11 @@ public class BooksService {
 	 * @param bookId 書籍ID
 	 * @return 書籍情報
 	 */
-	public BookDetailsInfo getBookInfo(int bookId, Integer lendingId) {
-		String sql = "";
-		BookDetailsInfo bookDetailsInfo = new BookDetailsInfo();
-		if(lendingId != null) {
-			sql = "SELECT DISTINCT books.id, title, author, publisher, publish_date, isbn, description, thumbnail_url, thumbnail_name, CASE WHEN book_id > 0 THEN '貸し出し中' ELSE '貸し出し可' END AS lending_status FROM books LEFT JOIN lending_manages lm on books.id = lm.book_id WHERE books.id = ? AND books.lending_Id = ? ;";
-			bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper(), bookId,lendingId);
-		}else {
-			sql = "SELECT DISTINCT books.id, title, author, publisher, publish_date, isbn, description, thumbnail_url, thumbnail_name, CASE WHEN book_id > 0 THEN '貸し出し中' ELSE '貸し出し可' END AS lending_status FROM books LEFT JOIN lending_manages lm on books.id = lm.book_id WHERE books.id = ?;";
-			bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper(), bookId);
-		}
+	public BookDetailsInfo getBookInfo(int bookId) {
+		String sql = "SELECT DISTINCT books.id, title, author, publisher, publish_date, isbn, description, thumbnail_url, thumbnail_name, CASE WHEN lending_date IS NOT NULL THEN '貸し出し中' ELSE '貸し出し可' END AS lending_status FROM books LEFT JOIN lending_manages lm on books.id = lm.book_id WHERE books.id = ?;";
+
+		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper(), bookId);
+
 		return bookDetailsInfo;
 	}
 

@@ -16,8 +16,8 @@ public class LendingManegesRowMapper implements RowMapper<LendingManegesInfo>{
 		// Query結果（ResultSet rs）を、オブジェクトに格納する実装
 		LendingManegesInfo lendingManegesInfo = new LendingManegesInfo();
 
-		lendingManegesInfo.setId(rs.getInt("id"));
-		lendingManegesInfo.setBookId(rs.getInt("book_id"));
+		lendingManegesInfo.setBookId(rs.getInt("id"));
+		lendingManegesInfo.setTitle(rs.getString("title"));
 		lendingManegesInfo.setLendingDate(rs.getDate("lending_date"));
 		lendingManegesInfo.setReturnDate(rs.getDate("return_date"));
 		

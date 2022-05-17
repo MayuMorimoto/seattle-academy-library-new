@@ -32,27 +32,42 @@ public class LendingController {
 		logger.info("Welcome lendBook! The client locale is {}.", locale);
 
 		// 貸出し状態を確認する
-		int isLendCount = lendingService.checkLendingStatus(bookId);
-		if (isLendCount > 0) {
+		boolean isLendCount = lendingService.checkLendingStatus(bookId);
+		//
+		if (isLendCount) {
 			redirectAttributes.addFlashAttribute("error", "貸出し済みです。");
 		} else {
 			// 本を借りる
-			lendingService.lendBook(bookId);
-			//最新の貸出管理IDを取得し、booksTBLに保持させる
-			lendingService.updateBooksLendingBookId(bookId);
+			//既に貸出管理TBLに登録されているか確認
+			Integer lendingBookId = lendingService.getLendingBookId(bookId);
+			if(lendingBookId != null) {
+				//既にあるレコードの貸出日と返却日を更新
+				lendingService.alradyLendBook(bookId);
+			}else {
+				//貸出管理TBLにINSERT
+				lendingService.lendBook(bookId);
+			}
 		}
 		// 詳細画面に遷移する
 		return "redirect:/details?bookId=" + bookId;
 	}
 
+	/**
+	 * 本を返す
+	 * 
+	 * @param locale
+	 * @param bookId
+	 * @param redirectAttributes
+	 * @return
+	 */
 	@RequestMapping(value = "/returnBook", method = RequestMethod.POST)
 	public String returnBook(Locale locale, int bookId, RedirectAttributes redirectAttributes) {
 		logger.info("Welcome returnBook! The client locale is {}.", locale);
 
 		// 貸出し状態を確認する
-		int isLendCounts = lendingService.checkLendingStatus(bookId);
-
-		if (isLendCounts > 0) {
+		boolean isLendCount = lendingService.checkLendingStatus(bookId);
+		//貸出されている場合、返却処理実施。そうではない場合、エラーメッセージ表示
+		if (isLendCount) {
 			lendingService.returnBook(bookId);
 		} else {
 			redirectAttributes.addFlashAttribute("error", "貸出しされていません。");

@@ -30,6 +30,9 @@ public class RentHistoryController {
 	public String createAccount(Model model) {
 		//画面表示内容を取得する
 		List<LendingManegesInfo> lendingManegesInfoList = lendingService.getLendingBookInfo();
+		for(LendingManegesInfo lendingManegesInfo : lendingManegesInfoList) {
+			lendingManegesInfo.setUrl("http://localhost:8080/SeattleLibrary/details?bookId=" + lendingManegesInfo.getBookId());
+		}
 		model.addAttribute("lendingManegesInfoList", lendingManegesInfoList);
 		return "rentHistory";
 	}

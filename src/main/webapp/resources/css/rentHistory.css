@@ -3,13 +3,17 @@ table, td, th {
 	font-size : 100%;
 }
 
-.table{
-	justify-content: center;
+#rentHistoryTbl{
+	width: 800px;
+    margin: auto;
 }
 
-#rentHistoryTbl{
-	width: 300px;
-    margin: auto;
+#lendingDate{
+	width: 200px;
+}
+
+#rentdate{
+	width: 200px;
 }
 
 .header{

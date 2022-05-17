@@ -12,6 +12,7 @@
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" type="text/css">
 <link href="<c:url value="/resources/css/rentHistory.css" />" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
 </head>
 <body class="wrapper">
@@ -20,7 +21,7 @@
             <img class="mark" src="resources/img/logo.png" />
             <div class="logo">Seattle Library</div>
         </div>
-        <div class="right">
+        <div class="text-right">
             <ul>
                 <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
                 <li><a href="<%=request.getContextPath()%>/">ログアウト</a></li>
@@ -28,18 +29,16 @@
         </div>
     </header>
     <main>
-    	<div class="table">
-	    	<table id="rentHistoryTbl">
+    	<div>
+	    	<table class="table" id="rentHistoryTbl">
 	    		<tr>
-	    			<th class="header">貸出管理ID</th>
-	    			<th class="header">書籍ID</th>
-	    			<th class="header">貸出日</th>
-	    			<th class="header">返却日</th>
+	    			<th class="header">書籍名</th>
+	    			<th class="header" id="lendingDate">貸出日</th>
+	    			<th class="header" id="rentdate">返却日</th>
 	    		</tr>
 	    		<c:forEach var="lendingManegesInfo" items="${lendingManegesInfoList}">
 	    			<tr>
-	    				<td>${lendingManegesInfo.id}</td>
-	    				<td>${lendingManegesInfo.bookId}</td>
+	    				<td><a href="${lendingManegesInfo.url}">${lendingManegesInfo.title}</a></td>
 	    				<td>${lendingManegesInfo.lendingDate}</td>
 	    				<td>${lendingManegesInfo.returnDate}</td>
 	    			</tr>

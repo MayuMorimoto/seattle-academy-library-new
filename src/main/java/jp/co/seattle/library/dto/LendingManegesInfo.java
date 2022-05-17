@@ -14,9 +14,11 @@ import lombok.Data;
 @Data
 public class LendingManegesInfo {
 	
-	private int id;
-	
 	private int bookId;
+	
+	private String url;
+	
+	private String title;
 	
 	private Date lendingDate; 
 	
