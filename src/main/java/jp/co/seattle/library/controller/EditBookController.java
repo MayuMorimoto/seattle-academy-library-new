@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jp.co.seattle.library.commonutil.BookUtil;
 import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
+import jp.co.seattle.library.service.LendingService;
 import jp.co.seattle.library.service.ThumbnailService;
 
 @Controller
@@ -29,11 +30,15 @@ public class EditBookController {
 	private ThumbnailService thumbnailService;
 	@Autowired
 	private BookUtil bookUtil;
+	@Autowired
+	private LendingService lendingService;
 
 	@RequestMapping(value = "/editBook", method = RequestMethod.GET)
 	public String transitionEdit(Locale locale, int bookId, Model model) {
 		logger.info("Welcome EditBooks.java! The client locale is {}.", locale);
-		model.addAttribute("bookInfo", booksService.getBookInfo(bookId));
+		//最新の貸出管理IDを取得
+		Integer lendingId = lendingService.getLendingBookId(bookId);
+		model.addAttribute("bookInfo", booksService.getBookInfo(bookId,lendingId));
 		return "editBook";
 	}
 

@@ -32,13 +32,14 @@ public class LendingController {
 		logger.info("Welcome lendBook! The client locale is {}.", locale);
 
 		// 貸出し状態を確認する
-		boolean isLend = lendingService.checkLendingStatus(bookId);
-
-		if (isLend) {
+		int isLendCount = lendingService.checkLendingStatus(bookId);
+		if (isLendCount > 0) {
 			redirectAttributes.addFlashAttribute("error", "貸出し済みです。");
 		} else {
 			// 本を借りる
 			lendingService.lendBook(bookId);
+			//最新の貸出管理IDを取得し、booksTBLに保持させる
+			lendingService.updateBooksLendingBookId(bookId);
 		}
 		// 詳細画面に遷移する
 		return "redirect:/details?bookId=" + bookId;
@@ -49,9 +50,9 @@ public class LendingController {
 		logger.info("Welcome returnBook! The client locale is {}.", locale);
 
 		// 貸出し状態を確認する
-		boolean isLend = lendingService.checkLendingStatus(bookId);
+		int isLendCounts = lendingService.checkLendingStatus(bookId);
 
-		if (isLend) {
+		if (isLendCounts > 0) {
 			lendingService.returnBook(bookId);
 		} else {
 			redirectAttributes.addFlashAttribute("error", "貸出しされていません。");

@@ -40,9 +40,9 @@ public class DeleteBookController {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
 		// 書籍の貸出し状態を取得する
-		boolean isLend = lendingService.checkLendingStatus(bookId);
+		int isLendCount = lendingService.checkLendingStatus(bookId);
 
-		if (isLend) {
+		if (isLendCount > 0) {
 			redirectAttributes.addFlashAttribute("error", "貸し出し中のため削除できません。");
 			return "redirect:/details?bookId=" + bookId;
 		} else {
