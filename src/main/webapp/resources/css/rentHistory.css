@@ -1,0 +1,21 @@
+table, td, th {
+	border: 2px #808080 solid; 
+	font-size : 100%;
+}
+
+#rentHistoryTbl{
+	width: 800px;
+    margin: auto;
+}
+
+#lendingDate{
+	width: 200px;
+}
+
+#rentdate{
+	width: 200px;
+}
+
+.header{
+	background-color: #D7EEFF;
+}

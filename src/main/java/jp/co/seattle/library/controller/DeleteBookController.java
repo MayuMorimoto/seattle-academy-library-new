@@ -48,6 +48,8 @@ public class DeleteBookController {
 		} else {
 			// 書籍の削除
 			booksService.deleteBook(bookId);
+			//履歴からも削除
+			lendingService.deleteLendingInfo(bookId);
 			return "redirect:/home";
 		}
 	}
